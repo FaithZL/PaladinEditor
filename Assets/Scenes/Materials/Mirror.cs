@@ -11,13 +11,19 @@ public class Mirror : Material {
         return "Mirror";
     }
 
-    void updateMaterial() {
+    void InitName() {
+        var mat = gameObject.GetComponent<Renderer>().material;
+        mat.name = "mirror";
+    }
+
+    void UpdateMaterial() {
         var mat = gameObject.GetComponent<Renderer>().material;
         mat.SetColor("_Kr", Kr);
     }
 
     private void Awake() {
-        updateMaterial();
+        InitName();
+        UpdateMaterial();
     }
 
     void Start() {
@@ -26,6 +32,6 @@ public class Mirror : Material {
 
     // Update is called once per frame
     void Update() {
-        updateMaterial();
+        UpdateMaterial();
     }
 }

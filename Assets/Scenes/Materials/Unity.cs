@@ -16,11 +16,17 @@ public class Unity : Material {
         return "UnityMat";
     }
 
-    private void Awake() {
-        Update();
+    void InitName() {
+        var mat = gameObject.GetComponent<Renderer>().material;
+        mat.name = "unity";
     }
 
-    void updateMaterial() {
+    private void Awake() {
+        InitName();
+        UpdateMaterial();
+    }
+
+    void UpdateMaterial() {
         var mat = gameObject.GetComponent<Renderer>().material;
         mat.SetColor("_Color", albedo);
         mat.SetFloat("_Metallic", metallic);
@@ -34,6 +40,6 @@ public class Unity : Material {
 
     // Update is called once per frame
     void Update() {
-        updateMaterial();
+        UpdateMaterial();
     }
 }

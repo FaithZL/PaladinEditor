@@ -413,8 +413,6 @@ public class Paladin : MonoBehaviour {
 
         var mat = prim.GetComponent<Renderer>().material;
 
-        Debug.Log(mat.GetFloat("_Metallic"));
-
         ret["param"] = param;
         param["normals"] = normals;
         param["verts"] = verts;
@@ -422,7 +420,7 @@ public class Paladin : MonoBehaviour {
         param["material"] = material;
         param["indexes"] = indexes;
         param["transform"] = transformData;
-
+        param["material"] = MatExporter.getMaterialData(mat);
         return ret;
     }
 

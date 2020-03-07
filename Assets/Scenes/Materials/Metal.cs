@@ -21,7 +21,13 @@ public class Metal : Material {
     }
 
     private void Awake() {
+        InitName();
         updateMaterial();
+    }
+
+    void InitName() {
+        var mat = gameObject.GetComponent<Renderer>().material;
+        mat.name = "metal";
     }
 
     void updateMaterial() {

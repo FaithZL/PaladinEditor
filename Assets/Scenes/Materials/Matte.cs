@@ -14,23 +14,28 @@ public class Matte : Material {
     }
 
     private void Awake() {
-        updateMaterial();
+        InitName();
+        UpdateMaterial();
     }
 
-    void updateMaterial() {
+    void InitName() {
+        var mat = gameObject.GetComponent<Renderer>().material;
+        mat.name = "matte";
+    }
+
+    void UpdateMaterial() {
         var mat = gameObject.GetComponent<Renderer>().material;
         mat.SetColor("_Kd", Kd);
         mat.SetFloat("_sigma", sigma);
     }
 
-    void Start()
-    {
+    void Start() {
         
     }
 
     // Update is called once per frame
     void Update()
     {
-        updateMaterial();
+        UpdateMaterial();
     }
 }

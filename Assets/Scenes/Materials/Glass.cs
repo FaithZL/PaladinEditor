@@ -23,7 +23,12 @@ public class Glass : Material {
         return "Glass";
     }
 
-    void updateMaterial() {
+    void InitName() {
+        var mat = gameObject.GetComponent<Renderer>().material;
+        mat.name = "glass";
+    }
+
+    void UpdateMaterial() {
         var mat = gameObject.GetComponent<Renderer>().material;
         mat.SetColor("_Kr", Kr);
         mat.SetColor("_Kt", Kt);
@@ -35,7 +40,8 @@ public class Glass : Material {
     }
 
     private void Awake() {
-        updateMaterial();
+        InitName();
+        UpdateMaterial();
     }
 
     void Start() {
@@ -43,6 +49,6 @@ public class Glass : Material {
     }
 
     void Update() {
-        updateMaterial();
+        UpdateMaterial();
     }
 }
