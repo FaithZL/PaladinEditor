@@ -370,7 +370,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c39632f57533a411aa8256773b0dc2dd, type: 2}
+  - {fileID: 2100000, guid: c24fdbb208ea148839ca5bdce12be172, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -411,9 +411,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9cdf74712f3a4ea3aedca32ee25925b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  metallic: 0.23000000417232513
+  metallic: 0.6060000061988831
   smoothness: 0.5
-  albedo: {r: 0, g: 0, b: 0, a: 0}
+  albedo: {r: 0.8301887, g: 0.34069067, b: 0.34069067, a: 0}
 --- !u!1 &623913428
 GameObject:
   m_ObjectHideFlags: 0
@@ -797,10 +797,6 @@ GameObject:
   - component: {fileID: 2010234958}
   - component: {fileID: 2010234957}
   - component: {fileID: 2010234961}
-  - component: {fileID: 2010234963}
-  - component: {fileID: 2010234962}
-  - component: {fileID: 2010234965}
-  - component: {fileID: 2010234964}
   m_Layer: 0
   m_Name: Quad
   m_TagString: Untagged
@@ -840,7 +836,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2f1ea1321fbc54691ad55b607b09645a, type: 2}
+  - {fileID: 2100000, guid: c24fdbb208ea148839ca5bdce12be172, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -897,60 +893,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   metallic: 0.5
   smoothness: 0.5
-  albedo: {r: 0, g: 0, b: 0, a: 0}
---- !u!114 &2010234962
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2010234956}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a917ee0dea7bf4a60b5b3326fb3667e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Kd: {r: 1, g: 1, b: 1, a: 1}
-  sigma: 0
---- !u!114 &2010234963
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2010234956}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0ede6945d4c84184b9d73af3a62f3b1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Kr: {r: 0, g: 0, b: 0, a: 0}
-  Kt: {r: 0, g: 0, b: 0, a: 0}
-  uRoughness: 0.009999999776482582
-  vRoughness: 0.009999999776482582
-  eta: 1
-  remapRoughness: 0
---- !u!114 &2010234964
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2010234956}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0df2692b18d24a0a8f3b89caebc38f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2010234965
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2010234956}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5db18987f1fc45c0b7decb82a224e0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  albedo: {r: 0.20572266, g: 0.6320754, b: 0.6274217, a: 0}

@@ -3,6 +3,11 @@
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
+        _eta ("eta", Color) = (1, 1, 1, 1)
+        _k ("k", Color) = (1, 1, 1, 1)
+        _uRoughness("uRoughness", Range(0.01, 1)) = 0.01
+        _vRoughness("vRoughness", Range(0.01, 1)) = 0.01
+        _remapRoughness("remapRoughness", int) = 0
     }
     SubShader
     {

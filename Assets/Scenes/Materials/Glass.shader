@@ -3,6 +3,12 @@
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
+        _Kr ("Kr", Color) = (1, 1, 1, 1)
+        _Kt ("Kt", Color) = (1, 1, 1, 1)
+        _uRoughness("uRoughness", Range(0.01, 1)) = 0.01
+        _vRoughness("vRoughness", Range(0.01, 1)) = 0.01
+        _eta("eta", float) = 1
+        _remapRoughness("remapRoughness", int) = 0
     }
     SubShader
     {
@@ -41,6 +47,7 @@
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
                 UNITY_TRANSFER_FOG(o,o.vertex);
+                
                 return o;
             }
 

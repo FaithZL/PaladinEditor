@@ -3,6 +3,7 @@
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
+        _Kr ("Kr", Color) = (1, 1, 1, 1)
     }
     SubShader
     {
