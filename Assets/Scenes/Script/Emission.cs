@@ -6,9 +6,11 @@ public class Emission : MonoBehaviour {
 
     public int sampleNum = 1;
 
-    public Color color;
+    public Color color = new Color(1,1,1,1);
 
     public bool twoSided;
+
+    public float scale = 1;
 
     // Start is called before the first frame update
     void Start() {

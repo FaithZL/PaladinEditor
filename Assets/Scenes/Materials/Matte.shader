@@ -11,6 +11,8 @@
         Tags { "RenderType"="Opaque" }
         LOD 100
 
+        Cull Off
+
         Pass
         {
             CGPROGRAM
@@ -35,6 +37,7 @@
             };
 
             sampler2D _MainTex;
+            fixed4 _Kd;
             float4 _MainTex_ST;
 
             v2f vert (appdata v)
@@ -49,7 +52,7 @@
             fixed4 frag (v2f i) : SV_Target
             {
                 // sample the texture
-                fixed4 col = tex2D(_MainTex, i.uv);
+                fixed4 col = _Kd;
                 // apply fog
                 UNITY_APPLY_FOG(i.fogCoord, col);
                 return col;

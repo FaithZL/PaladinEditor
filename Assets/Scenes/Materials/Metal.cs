@@ -35,12 +35,11 @@ public class Metal : Material {
         mat.SetColor("_eta", eta);
         mat.SetColor("_k", k);
         mat.SetFloat("_uRoughness", uRoughness);
-        mat.SetFloat("_uRoughness", vRoughness);
+        mat.SetFloat("_vRoughness", vRoughness);
         int remap = remapRoughness ? 1 : 0;
-        mat.SetInt("", remap);
+        mat.SetInt("_remapRoughness", remap);
     }
 
-    // Start is called before the first frame update
     void Start() {
         
     }

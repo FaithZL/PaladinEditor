@@ -63,7 +63,8 @@
         {
             "type" : "triMesh",
             "subType" : "mesh",
-            "param"   : {
+            "emission" : null,
+            "param"    : {
                 "normals" : [
                     0.0,
                     0.0,
@@ -102,7 +103,7 @@
                     1.0,
                     1.0
                 ],
-                "material" : "indexes"  : [
+                "indexes" : [
                     0,
                     3,
                     1,
@@ -130,6 +131,25 @@
                         0.0,
                         1.0
                     ]
+                },
+                "material"  : {
+                    "type" : "glass",
+                    "param" : {
+                        "Kr" : [
+                            0.679245293140411,
+                            0.394090443849564,
+                            0.394090443849564
+                        ],
+                        "Kt" : [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "uRough" : 0.00999999977648258,
+                        "vRough" : 0.00999999977648258,
+                        "eta"    : 1.0,
+                        "remapRough" : true
+                    }
                 }
             }
         }

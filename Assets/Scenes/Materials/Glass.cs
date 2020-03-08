@@ -36,7 +36,7 @@ public class Glass : Material {
         mat.SetFloat("_uRoughness", vRoughness);
         mat.SetFloat("_eta", eta);
         int remap = remapRoughness ? 1 : 0;
-        mat.SetInt("", remap);
+        mat.SetInt("_remapRoughness", remap);
     }
 
     private void Awake() {

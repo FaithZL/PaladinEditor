@@ -784,6 +784,7 @@ MonoBehaviour:
   sampleNum: 1
   color: {r: 0.9245283, g: 0.87655747, b: 0.87655747, a: 0}
   twoSided: 0
+  scale: 1
 --- !u!1 &2010234956
 GameObject:
   m_ObjectHideFlags: 0
@@ -836,7 +837,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c24fdbb208ea148839ca5bdce12be172, type: 2}
+  - {fileID: 2100000, guid: b82d5d036f63f47dfa0386cfa518acc8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -888,9 +889,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2010234956}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9cdf74712f3a4ea3aedca32ee25925b, type: 3}
+  m_Script: {fileID: 11500000, guid: d0ede6945d4c84184b9d73af3a62f3b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  metallic: 0.5
-  smoothness: 0.5
-  albedo: {r: 0.20572266, g: 0.6320754, b: 0.6274217, a: 0}
+  Kr: {r: 0.6792453, g: 0.39409044, b: 0.39409044, a: 1}
+  Kt: {r: 1, g: 1, b: 1, a: 1}
+  uRoughness: 0.01
+  vRoughness: 0.01
+  eta: 1
+  remapRoughness: 1

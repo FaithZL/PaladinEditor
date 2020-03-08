@@ -365,7 +365,6 @@ public class Paladin : MonoBehaviour {
         var normals = new JsonData();
         var verts = new JsonData();
         var UVs = new JsonData();
-        var material = new JsonData(null);
         var indexes = new JsonData();
         var transformData = new JsonData();
 
@@ -399,7 +398,6 @@ public class Paladin : MonoBehaviour {
         }
 
         Matrix4x4 matrix = prim.transform.localToWorldMatrix;
-
         transformData["type"] = "matrix";
         var matParam = new JsonData();
         for(int i = 0; i < 4; ++i) {
@@ -411,16 +409,44 @@ public class Paladin : MonoBehaviour {
         }
         transformData["param"] = matParam;
 
-        var mat = prim.GetComponent<Renderer>().material;
+        ret["emission"] = getEmissionData(prim);
 
+        var mat = prim.GetComponent<Renderer>().material;
         ret["param"] = param;
         param["normals"] = normals;
         param["verts"] = verts;
         param["UVs"] = UVs;
-        param["material"] = material;
         param["indexes"] = indexes;
         param["transform"] = transformData;
         param["material"] = MatExporter.getMaterialData(mat);
+        return ret;
+    }
+
+    static JsonData fromColor(Color color) {
+        var ret = new JsonData();
+        ret.Add((double)color.r);
+        ret.Add((double)color.g);
+        ret.Add((double)color.b);
+        return ret;
+    }
+
+    JsonData getEmissionData(MeshFilter prim) {
+
+        Emission emission = GameObject.FindObjectOfType<Emission>();
+        if(emission == null) {
+            return null;
+        }
+
+        var ret = new JsonData();
+
+        ret["scale"] = emission.scale;
+        ret["nSamples"] = emission.sampleNum;
+        ret["twoSided"] = emission.twoSided;
+        var Le = new JsonData();
+        Le["colorType"] = 1;
+        Le["color"] = fromColor(emission.color);
+        ret["Le"] = Le;
+
         return ret;
     }
 
