@@ -10,6 +10,9 @@ public class Paladin : MonoBehaviour {
 
     public int threadNum = 0;
 
+    //[Header("--------medium--------")]
+    
+
     [Header("--------filter param--------")]
     public Filter filterName;
     public Vector2 filterRadius = new Vector2(1, 1);
@@ -266,7 +269,6 @@ public class Paladin : MonoBehaviour {
 
     void handleLights() {
         var lightData = new JsonData();
-        _output["lights"] = lightData;
         Light[] lights = GameObject.FindObjectsOfType<Light>() as Light[];
 
         for(int i = 0; i < lights.Length; ++i) {
@@ -277,6 +279,10 @@ public class Paladin : MonoBehaviour {
                 lightData.Add(getLight(light));
             }
         }
+        if(lights.Length > 0) {
+            _output["lights"] = lightData;
+        }
+        
     }
 
     JsonData getLight(Light light) {
@@ -413,6 +419,7 @@ public class Paladin : MonoBehaviour {
 
         var mat = prim.GetComponent<Renderer>().material;
         ret["param"] = param;
+        ret["name"] = prim.name;
         param["normals"] = normals;
         param["verts"] = verts;
         param["UVs"] = UVs;
@@ -432,8 +439,13 @@ public class Paladin : MonoBehaviour {
 
     JsonData getEmissionData(MeshFilter prim) {
 
-        Emission emission = GameObject.FindObjectOfType<Emission>();
-        if(emission == null) {
+        prim.GetComponentsInParent<Emission>();
+
+        Emission emission = prim.gameObject.GetComponent<Emission>();
+        //var emission = emissions[0];
+
+
+        if (emission == null) {
             return null;
         }
 
