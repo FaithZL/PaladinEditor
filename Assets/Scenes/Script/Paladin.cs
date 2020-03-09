@@ -276,7 +276,7 @@ public class Paladin : MonoBehaviour {
             if(light.type == LightType.Directional
                 || light.type == LightType.Point
                 || light.type == LightType.Spot) {
-                lightData.Add(getLight(light));
+                lightData.Add(LightExporter.getLight(light));
             }
         }
         if(lights.Length > 0) {
@@ -285,182 +285,18 @@ public class Paladin : MonoBehaviour {
         
     }
 
-    JsonData getLight(Light light) {
-        switch (light.type) {
-            case LightType.Point:
-                return getPointLight(light);
-            case LightType.Spot:
-                return getSpotLight(light);
-            case LightType.Directional:
-                return getDistantLight(light);
-            default:
-                return null;
-        }
-    }
-
-    JsonData getPointLight(Light light) {
-        var ret = new JsonData();
-        ret["type"] = "pointLight";
-
-        var param = new JsonData();
-        var pos = light.transform.localPosition;
-        var tf = new JsonData();
-        tf["type"] = "translate";
-        tf["param"] = fromVec3(pos);
-        param["transform"] = tf;
-
-        var I = new JsonData();
-        I["colorType"] = 1;
-        var c = light.color;
-        I["color"] = fromVec3(new Vector3(c.r, c.g, c.b));
-        param["I"] = I;
-
-        param["scale"] = light.intensity;
-
-        ret["param"] = param;
-
-        return ret;
-    }
-
-    JsonData getDistantLight(Light light) {
-        var ret = new JsonData();
-
-        ret["type"] = "distant";
-        var param = new JsonData();
-        var fwd = light.transform.forward;
-        param["wLight"] = fromVec3(-fwd);
-
-        var L = new JsonData();
-        L["colorType"] = 1;
-        var c = light.color;
-        L["color"] = fromVec3(new Vector3(c.r, c.g, c.b));
-        param["L"] = L;
-
-        param["scale"] = light.intensity;
-
-        ret["param"] = param;
-
-        return ret;
-    }
-
-    JsonData getSpotLight(Light light) {
-        var ret = new JsonData(null);
-
-        // todo
-
-        return ret;
-    }
+    
 
     void handlePrimitives() {
         MeshFilter[] primitives = GameObject.FindObjectsOfType<MeshFilter>() as MeshFilter[];
         var shapeData = new JsonData();
         for(int i = 0; i < primitives.Length; ++i) {
             var prim = primitives[i];
-            shapeData.Add(getPrimData(prim));
+            shapeData.Add(MeshExporter.getPrimData(prim));
         }
         _output["shapes"] = shapeData;
     }
 
-    JsonData getPrimData(MeshFilter prim) {
-        var ret = new JsonData();
-
-        ret["type"] = "triMesh";
-        ret["subType"] = "mesh";
-
-        var param = new JsonData();
-        var normals = new JsonData();
-        var verts = new JsonData();
-        var UVs = new JsonData();
-        var indexes = new JsonData();
-        var transformData = new JsonData();
-
-        var mesh = prim.sharedMesh;
-
-        for (int i = 0; i < mesh.normals.Length; ++i) {
-            var normal = mesh.normals[i];
-            normals.Add((double)normal.x);
-            normals.Add((double)normal.y);
-            normals.Add((double)normal.z);
-        }
-
-        for(int i = 0; i < mesh.vertices.Length; ++i) {
-            var vert = mesh.vertices[i];
-            verts.Add((double)vert.x);
-            verts.Add((double)vert.y);
-            verts.Add((double)vert.z);
-        }
-
-        for(int i = 0; i < mesh.uv.Length; ++i) {
-            var uv = mesh.uv[i];
-            UVs.Add((double)uv.x);
-            UVs.Add((double)uv.y);
-        }
-
-        for (int i = 0; i < mesh.subMeshCount; ++i) {
-            var indices = mesh.GetIndices(i);
-            for(int j = 0; j < indices.Length; ++j) {
-                indexes.Add(indices[j]);
-            }
-        }
-
-        Matrix4x4 matrix = prim.transform.localToWorldMatrix;
-        transformData["type"] = "matrix";
-        var matParam = new JsonData();
-        for(int i = 0; i < 4; ++i) {
-            var row = matrix.GetRow(i);
-            matParam.Add((double)row.x);
-            matParam.Add((double)row.y);
-            matParam.Add((double)row.z);
-            matParam.Add((double)row.w);
-        }
-        transformData["param"] = matParam;
-
-        ret["emission"] = getEmissionData(prim);
-
-        var mat = prim.GetComponent<Renderer>().material;
-        ret["param"] = param;
-        ret["name"] = prim.name;
-        param["normals"] = normals;
-        param["verts"] = verts;
-        param["UVs"] = UVs;
-        param["indexes"] = indexes;
-        param["transform"] = transformData;
-        param["material"] = MatExporter.getMaterialData(mat);
-        return ret;
-    }
-
-    static JsonData fromColor(Color color) {
-        var ret = new JsonData();
-        ret.Add((double)color.r);
-        ret.Add((double)color.g);
-        ret.Add((double)color.b);
-        return ret;
-    }
-
-    JsonData getEmissionData(MeshFilter prim) {
-
-        prim.GetComponentsInParent<Emission>();
-
-        Emission emission = prim.gameObject.GetComponent<Emission>();
-        //var emission = emissions[0];
-
-
-        if (emission == null) {
-            return null;
-        }
-
-        var ret = new JsonData();
-
-        ret["scale"] = emission.scale;
-        ret["nSamples"] = emission.sampleNum;
-        ret["twoSided"] = emission.twoSided;
-        var Le = new JsonData();
-        Le["colorType"] = 1;
-        Le["color"] = fromColor(emission.color);
-        ret["Le"] = Le;
-
-        return ret;
-    }
 
     void export() {
         string json = _output.ToJson(true);
