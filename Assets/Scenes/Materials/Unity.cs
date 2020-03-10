@@ -7,7 +7,7 @@ public class Unity : Material {
     [Range(0, 1)]
     public float metallic = 0.5f;
 
-    [Range(0, 0.99f)]
+    [Range(0, 1)]
     public float smoothness = 0.5f;
 
     public Color albedo = new Color(1, 1, 1);

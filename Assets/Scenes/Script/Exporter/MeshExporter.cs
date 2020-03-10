@@ -40,10 +40,14 @@ public class MeshExporter {
                 indexes.Add(indices[j]);
             }
         }
-
-        param["normals"] = normals;
         param["verts"] = verts;
-        param["UVs"] = UVs;
+        if (mesh.normals.Length > 0) {
+            param["normals"] = normals;
+        }        
+        if (mesh.uv.Length > 0) {
+            param["UVs"] = UVs;
+        }
+        
         param["indexes"] = indexes;
 
         return param;
@@ -75,7 +79,7 @@ public class MeshExporter {
         ret["param"] = getPrimParam(prim);
         ret["name"] = prim.name;
         ret["transform"] = transformData;
-        ret["material"] = MatExporter.getMaterialData(mat);
+        ret["param"]["material"] = MatExporter.getMaterialData(mat);
         return ret;
     }
 
