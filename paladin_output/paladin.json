@@ -55,7 +55,7 @@
     },
     "sampler" : {
         "param" : {
-            "spp" : 256
+            "spp" : 16
         },
         "type"  : "random"
     },

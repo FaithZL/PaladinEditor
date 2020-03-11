@@ -5,9 +5,11 @@ using LitJson;
 
 public class MeshExporter {
     static public JsonData getPrimParam(MeshFilter prim) {
+
         var param = new JsonData();
 
         var mesh = prim.sharedMesh;
+        var mat = prim.GetComponent<Renderer>().material;
 
         var normals = new JsonData();
         var verts = new JsonData();
@@ -47,8 +49,16 @@ public class MeshExporter {
         if (mesh.uv.Length > 0) {
             param["UVs"] = UVs;
         }
-        
+
+        var transformData = new JsonData();
+        Matrix4x4 matrix = prim.transform.localToWorldMatrix;
+        transformData["type"] = "matrix";
+        transformData["param"] = Util.fromMatrix(matrix);
+        param["transform"] = transformData;
+
         param["indexes"] = indexes;
+        param["material"] = MatExporter.getMaterialData(mat);
+        param["emission"] = getEmissionData(prim);
 
         return param;
     }
@@ -59,27 +69,10 @@ public class MeshExporter {
         ret["type"] = "triMesh";
         ret["subType"] = "mesh";
 
-        var transformData = new JsonData();
-        
-        Matrix4x4 matrix = prim.transform.localToWorldMatrix;
-        transformData["type"] = "matrix";
-        var matParam = new JsonData();
-        for (int i = 0; i < 4; ++i) {
-            var row = matrix.GetRow(i);
-            matParam.Add((double)row.x);
-            matParam.Add((double)row.y);
-            matParam.Add((double)row.z);
-            matParam.Add((double)row.w);
-        }
-        transformData["param"] = matParam;
-
-        ret["emission"] = getEmissionData(prim);
-
-        var mat = prim.GetComponent<Renderer>().material;
         ret["param"] = getPrimParam(prim);
         ret["name"] = prim.name;
-        ret["transform"] = transformData;
-        ret["param"]["material"] = MatExporter.getMaterialData(mat);
+        
+
         return ret;
     }
 
@@ -92,8 +85,6 @@ public class MeshExporter {
     }
 
     static JsonData getEmissionData(MeshFilter prim) {
-
-        prim.GetComponentsInParent<Emission>();
 
         Emission emission = prim.gameObject.GetComponent<Emission>();
 

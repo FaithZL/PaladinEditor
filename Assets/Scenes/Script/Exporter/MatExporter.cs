@@ -27,7 +27,7 @@ public class MatExporter {
         ret["type"] = mat.name;
 
         var param = new JsonData();
-        param["albedo"] = fromColor(mat.GetColor("_Color"));
+        param["albedo"] = Util.fromColor(mat.GetColor("_Color"));
         param["roughness"] = 1 - mat.GetFloat("_Smoothness");
         param["metallic"] = mat.GetFloat("_Metallic");
         ret["param"] = param;
@@ -35,13 +35,6 @@ public class MatExporter {
         return ret;
     }
 
-    static JsonData fromColor(Color color) {
-        var ret = new JsonData();
-        ret.Add((double)color.r);
-        ret.Add((double)color.g);
-        ret.Add((double)color.b);
-        return ret;
-    }
 
     static JsonData getMatteData(UnityEngine.Material mat) {
         var ret = new JsonData();
@@ -49,7 +42,7 @@ public class MatExporter {
         ret["type"] = mat.name;
 
         var param = new JsonData();
-        param["Kd"] = fromColor(mat.GetColor("_Kd"));
+        param["Kd"] = Util.fromColor(mat.GetColor("_Kd"));
         param["sigma"] = mat.GetFloat("_sigma");
         ret["param"] = param;
 
@@ -61,8 +54,8 @@ public class MatExporter {
         ret["type"] = mat.name;
 
         var param = new JsonData();
-        param["eta"] = fromColor(mat.GetColor("_eta"));
-        param["k"] = fromColor(mat.GetColor("k"));
+        param["eta"] = Util.fromColor(mat.GetColor("_eta"));
+        param["k"] = Util.fromColor(mat.GetColor("k"));
         param["uRough"] = mat.GetFloat("_uRoughness");
         param["vRough"] = mat.GetFloat("_vRoughness");
         param["rough"] = null;
@@ -79,7 +72,7 @@ public class MatExporter {
         ret["type"] = mat.name;
 
         var param = new JsonData();
-        param["Kr"] = fromColor(mat.GetColor("_Kr"));
+        param["Kr"] = Util.fromColor(mat.GetColor("_Kr"));
         ret["param"] = param;
 
         return ret;
@@ -91,8 +84,8 @@ public class MatExporter {
         ret["type"] = mat.name;
 
         var param = new JsonData();
-        param["Kr"] = fromColor(mat.GetColor("_Kr"));
-        param["Kt"] = fromColor(mat.GetColor("_Kt"));
+        param["Kr"] = Util.fromColor(mat.GetColor("_Kr"));
+        param["Kt"] = Util.fromColor(mat.GetColor("_Kt"));
         param["uRough"] = mat.GetFloat("_uRoughness");
         param["vRough"] = mat.GetFloat("_vRoughness");
         param["eta"] = mat.GetFloat("_eta");

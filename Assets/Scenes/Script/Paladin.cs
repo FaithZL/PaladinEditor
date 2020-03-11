@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -8,10 +8,11 @@ using System.IO;
 
 public class Paladin : MonoBehaviour {
 
+    public string outputDir = "paladin_output";
+
     public int threadNum = 0;
 
     //[Header("--------medium--------")]
-    
 
     [Header("--------filter param--------")]
     public Filter filterName;
@@ -29,6 +30,7 @@ public class Paladin : MonoBehaviour {
     public Vector2Int resolution = new Vector2Int(500,500);
     public Rect cropWindow = new Rect(0,0,1,1);
     public string outputName = "paladin";
+    public string imageName = "paladin";
     public FileFormat fileFormat;
     [Range(0, 1)]
     public float scale = 1.0f;
@@ -103,9 +105,9 @@ public class Paladin : MonoBehaviour {
         var up = _camera.transform.up;
 
         var lookAt = new JsonData();
-        lookAt.Add(fromVec3(pos));
-        lookAt.Add(fromVec3(target));
-        lookAt.Add(fromVec3(up));
+        lookAt.Add(Util.fromVec3(pos));
+        lookAt.Add(Util.fromVec3(target));
+        lookAt.Add(Util.fromVec3(up));
 
         param["lookAt"] = lookAt;
 
@@ -121,14 +123,6 @@ public class Paladin : MonoBehaviour {
 
         _output["camera"] = cameraData;
 
-    }
-
-    JsonData fromVec3(Vector3 v) {
-        var ret = new JsonData();
-        ret.Add((double)v.x);
-        ret.Add((double)v.y);
-        ret.Add((double)v.z);
-        return ret;
     }
 
     void handleThreadNum() {
@@ -226,7 +220,7 @@ public class Paladin : MonoBehaviour {
         cw.Add((double)cropWindow.height);
         param["cropWindow"] = cw;
 
-        var fn = outputName + "." + PaladinEnum.getName(fileFormat);
+        var fn = imageName + "." + PaladinEnum.getName(fileFormat);
         param["fileName"] = fn;
 
         param["scale"] = scale;
@@ -285,22 +279,58 @@ public class Paladin : MonoBehaviour {
         
     }
 
-    
+    void handleChild(Transform node) {
+
+        var mc = node.GetComponent<MeshComp>();
+        var prim = node.GetComponent<MeshFilter>();
+        var isActive = node.gameObject.activeInHierarchy;
+
+        if (mc && isActive) {
+            // 单独导出网格文件
+            Debug.Log(mc.fileName);
+            var shapeData = new JsonData();
+            shapeData["type"] = "triMesh";
+            shapeData["subType"] = "mesh";
+            var transformData = new JsonData();
+            transformData["type"] = "matrix";
+            transformData["param"] = Util.fromMatrix(node.localToWorldMatrix);
+            shapeData["transform"] = transformData;
+            shapeData["param"] = mc.fileName + ".json";
+            _output["shapes"].Add(shapeData);
+            // 如果该节点包含MeshComp组件，则表示该节点单独导出文件
+            return;
+
+        } else if (prim && isActive) {
+            // 如果有prim对象并且处于激活状态
+            _output["shapes"].Add(MeshExporter.getPrimData(prim));
+        }
+
+        foreach (Transform child in node.transform) {
+            handleChild(child);
+        }
+
+    }
+
+
 
     void handlePrimitives() {
-        MeshFilter[] primitives = GameObject.FindObjectsOfType<MeshFilter>() as MeshFilter[];
-        var shapeData = new JsonData();
-        for(int i = 0; i < primitives.Length; ++i) {
-            var prim = primitives[i];
-            shapeData.Add(MeshExporter.getPrimData(prim));
-        }
-        _output["shapes"] = shapeData;
+        _output["shapes"] = new JsonData();
+        handleChild(transform);
+
+        //MeshFilter[] primitives = GameObject.FindObjectsOfType<MeshFilter>() as MeshFilter[];
+        //var shapeData = new JsonData();
+        //for(int i = 0; i < primitives.Length; ++i) {
+        //    var prim = primitives[i];
+        //    Debug.Log(prim.name);
+        //    shapeData.Add(MeshExporter.getPrimData(prim));
+        //}
+        //_output["shapes"] = shapeData;
     }
 
 
     void export() {
         string json = _output.ToJson(true);
-        var dir = "paladin_output";
+        var dir = "paladin_output" + "/" + outputName;
         if (!Directory.Exists(dir)) {
             Directory.CreateDirectory(dir);
         }
