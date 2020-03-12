@@ -45,7 +45,7 @@ public class MeshExporter {
         param["verts"] = verts;
         if (mesh.normals.Length > 0) {
             param["normals"] = normals;
-        }        
+        }
         if (mesh.uv.Length > 0) {
             param["UVs"] = UVs;
         }

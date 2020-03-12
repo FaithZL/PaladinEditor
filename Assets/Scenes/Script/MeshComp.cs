@@ -16,6 +16,13 @@ public class MeshComp : MonoBehaviour
     void export() {
         var comp = this.GetComponentInParent<Paladin>();
         var dir = comp.outputDir + "/" + comp.outputName;
+        var filePath = dir + "/" + fileName + ".json";
+
+        if(File.Exists(filePath)) {
+            return;
+        }
+
+        var sr = File.CreateText(filePath);
 
         var output = new JsonData();
         
@@ -25,19 +32,15 @@ public class MeshComp : MonoBehaviour
             var prim = primitives[i];
             output.Add(MeshExporter.getPrimParam(prim, transform));
         }
-        var filePath = dir + "/" + fileName + ".json";
-
-        var sr = File.CreateText(filePath);
+        
         sr.Write(output.ToJson(true));
 
         sr.Close();
-        Debug.Log(dir);
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log(this.name);
         export();
     }
 
