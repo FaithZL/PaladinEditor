@@ -285,9 +285,8 @@ public class Paladin : MonoBehaviour {
         var prim = node.GetComponent<MeshFilter>();
         var isActive = node.gameObject.activeInHierarchy;
 
-        if (mc && isActive) {
+        if (mc && mc.isActiveAndEnabled && isActive) {
             // 单独导出网格文件
-            Debug.Log(mc.fileName);
             var shapeData = new JsonData();
             shapeData["type"] = "triMesh";
             shapeData["subType"] = "mesh";
@@ -302,7 +301,7 @@ public class Paladin : MonoBehaviour {
 
         } else if (prim && isActive) {
             // 如果有prim对象并且处于激活状态
-            _output["shapes"].Add(MeshExporter.getPrimData(prim));
+            _output["shapes"].Add(MeshExporter.getPrimData(prim, transform));
         }
 
         foreach (Transform child in node.transform) {

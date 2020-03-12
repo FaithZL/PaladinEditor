@@ -4,7 +4,7 @@ using UnityEngine;
 using LitJson;
 
 public class MeshExporter {
-    static public JsonData getPrimParam(MeshFilter prim) {
+    static public JsonData getPrimParam(MeshFilter prim, Transform Parent) {
 
         var param = new JsonData();
 
@@ -52,6 +52,12 @@ public class MeshExporter {
 
         var transformData = new JsonData();
         Matrix4x4 matrix = prim.transform.localToWorldMatrix;
+        
+        Matrix4x4 parentMatrix = Parent.worldToLocalMatrix;
+
+        // 抽离出子节点相对父节点的变换矩阵
+        matrix = parentMatrix * matrix;
+
         transformData["type"] = "matrix";
         transformData["param"] = Util.fromMatrix(matrix);
         param["transform"] = transformData;
@@ -63,16 +69,15 @@ public class MeshExporter {
         return param;
     }
 
-    static public JsonData getPrimData(MeshFilter prim) {
+    static public JsonData getPrimData(MeshFilter prim, Transform Parent) {
         var ret = new JsonData();
 
         ret["type"] = "triMesh";
         ret["subType"] = "mesh";
 
-        ret["param"] = getPrimParam(prim);
+        ret["param"] = getPrimParam(prim, Parent);
         ret["name"] = prim.name;
         
-
         return ret;
     }
 

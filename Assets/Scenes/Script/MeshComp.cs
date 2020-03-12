@@ -23,7 +23,7 @@ public class MeshComp : MonoBehaviour
 
         for (int i = 0; i < primitives.Length; ++i) {
             var prim = primitives[i];
-            output.Add(MeshExporter.getPrimParam(prim));
+            output.Add(MeshExporter.getPrimParam(prim, transform));
         }
         var filePath = dir + "/" + fileName + ".json";
 
