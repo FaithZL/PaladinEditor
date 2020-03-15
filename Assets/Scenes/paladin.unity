@@ -962,7 +962,7 @@ MonoBehaviour:
   ySpp: 1
   dimensions: 6
   jitter: 1
-  integratorName: 2
+  integratorName: 0
   maxBounce: 6
   rrThreshold: 1
   lightSampleStrategy: 0

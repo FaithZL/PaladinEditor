@@ -1,0 +1,49 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# 创建的文件:28.01.2020 20:05:57
+
+newmtl mi28_glass
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5882 0.5882 0.5882
+	Kd 0.5882 0.5882 0.5882
+	Ks 0.9000 0.9000 0.9000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka p3dm.ru_T_MCH_Mi28_glass_DIF.tga
+	map_Kd p3dm.ru_T_MCH_Mi28_glass_DIF.tga
+	map_d p3dm.ru_T_MCH_Mi28_glass_LP.tga
+
+newmtl mi28_textures_inner
+	Ns 12.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5882 0.5882 0.5882
+	Kd 0.5882 0.5882 0.5882
+	Ks 0.5580 0.5580 0.5580
+	Ke 0.0000 0.0000 0.0000
+	map_Ka p3dm.ru_T_MCH_Mi28_interior_DIF.tga
+	map_Kd p3dm.ru_T_MCH_Mi28_interior_DIF.tga
+	map_bump p3dm.ru_T_MCH_Mi28_interior_NRM.tga
+	bump p3dm.ru_T_MCH_Mi28_interior_NRM.tga
+
+newmtl mi28_textures
+	Ns 12.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5882 0.5882 0.5882
+	Kd 0.5882 0.5882 0.5882
+	Ks 0.4500 0.4500 0.4500
+	Ke 0.0000 0.0000 0.0000
+	map_Ka p3dm.ru_T_MCH_Mi28_DIF.tga
+	map_Kd p3dm.ru_T_MCH_Mi28_DIF.tga
+	map_bump p3dm.ru_T_MCH_Mi28_NRM.tga
+	bump p3dm.ru_T_MCH_Mi28_NRM.tga
