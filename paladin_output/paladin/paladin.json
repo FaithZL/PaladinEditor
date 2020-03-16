@@ -55,7 +55,7 @@
     },
     "sampler" : {
         "param" : {
-            "spp" : 4
+            "spp" : 64
         },
         "type"  : "random"
     },
@@ -591,33 +591,7 @@
                     0.0,
                     0.200000017881393,
                     0.0,
-                    0.0399999991059303,
-                    0.0,
-                    0.0,
-                    0.200000017881393,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    1.0
-                ]
-            },
-            "param"     : "teapot.json"
-        },
-        {
-            "type" : "triMesh",
-            "subType" : "mesh",
-            "transform" : {
-                "type" : "matrix",
-                "param" : [
-                    0.200000002980232,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.200000017881393,
-                    0.0,
-                    -0.759999990463257,
+                    -0.430000007152557,
                     0.0,
                     0.0,
                     0.200000017881393,
@@ -633,12 +607,13 @@
     ],
     "integrator" : {
         "param" : {
-            "maxBounce" : 6,
+            "maxBounce" : 15,
             "rrThreshold" : 1.0,
             "lightSampleStrategy" : "power"
         },
         "type"  : "pt"
     },
+    "lights"     : null,
     "accelerator" : {
         "param" : {
             "maxPrimsInNode" : 1,

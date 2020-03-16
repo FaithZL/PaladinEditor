@@ -18,7 +18,11 @@ public class MeshComp : MonoBehaviour
         var dir = comp.outputDir + "/" + comp.outputName;
         var filePath = dir + "/" + fileName + ".json";
 
-        if(File.Exists(filePath)) {
+        if (!Directory.Exists(dir)) {
+            Directory.CreateDirectory(dir);
+        }
+
+        if (File.Exists(filePath)) {
             return;
         }
 

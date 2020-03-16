@@ -5,6 +5,7 @@ using System;
 using LitJson;
 using UnityEngine.Assertions;
 using System.IO;
+using UnityEditor;
 
 public class Paladin : MonoBehaviour {
 
@@ -77,9 +78,17 @@ public class Paladin : MonoBehaviour {
 
     void Start() {
         Debug.Log("导出");
+        clearDir();
         exec();
         export();
         Debug.Log("导出完毕");
+    }
+
+    void clearDir() {
+        var dir = outputDir + "/" + outputName;
+        if (Directory.Exists(dir)) 
+            Directory.Delete(dir, true);
+        Directory.CreateDirectory(dir);
     }
 
     void exec() {
@@ -90,8 +99,60 @@ public class Paladin : MonoBehaviour {
         handlePrimitives();
         handleIntegrator();
         handleLights();
+        handleEnvMap();
         handleAccelerator();
         handleThreadNum();
+    }
+
+    void handleEnvMap() {
+        var matSky = RenderSettings.skybox;
+        if (matSky == null) {
+            return;
+        }
+        var texture = matSky.GetTexture("_MainTex");
+        var rotation = matSky.GetFloat("_Rotation") + 180;
+        var color = matSky.GetColor("_Tint");
+        var exposure = matSky.GetFloat("_Exposure") * 2;
+
+        var envmapData = new JsonData();
+        envmapData["type"] = "envmap";
+        var param = new JsonData();
+        envmapData["param"] = param;
+
+        var transformLst = new JsonData();
+        var t1 = new JsonData();
+        t1["type"] = "rotateX";
+        t1["param"] = new JsonData();
+        t1["param"].Add(-90);
+
+        var t2 = new JsonData();
+        t2["type"] = "rotateY";
+        t2["param"] = new JsonData();
+        t2["param"].Add((double)rotation);
+        transformLst.Add(t1);
+        transformLst.Add(t2);
+
+        param["scale"] = exposure;
+        param["L"] = Util.fromColor(color);
+        param["nSamples"] = 1;
+        param["transform"] = transformLst;
+
+        
+        var srcFn = AssetDatabase.GetAssetPath(texture);
+        var idx = srcFn.LastIndexOf("/");
+        var dstFn = outputDir + "/" +outputName + srcFn.Substring(idx);
+        param["fn"] = srcFn.Substring(idx + 1);
+
+        if (!File.Exists(dstFn)) {
+            FileUtil.CopyFileOrDirectory(srcFn, dstFn);
+        }
+
+        if (_output["lights"] == null) {
+            _output["lights"] = new JsonData();
+        }
+        _output["lights"].Add(envmapData);
+
+
     }
 
     void handleCamera() {
@@ -273,10 +334,12 @@ public class Paladin : MonoBehaviour {
                 lightData.Add(LightExporter.getLight(light));
             }
         }
-        if(lights.Length > 0) {
+        if (lights.Length > 0) {
             _output["lights"] = lightData;
+        } else {
+            _output["lights"] = null;
         }
-        
+
     }
 
     void handleChild(Transform node) {
@@ -295,11 +358,17 @@ public class Paladin : MonoBehaviour {
             transformData["param"] = Util.fromMatrix(node.localToWorldMatrix);
             shapeData["transform"] = transformData;
             shapeData["param"] = mc.fileName + ".json";
+            if(_output["shapes"] == null) {
+                _output["shapes"] = new JsonData();
+            }
             _output["shapes"].Add(shapeData);
             // 如果该节点包含MeshComp组件，则表示该节点单独导出文件
             return;
 
         } else if (prim && isActive) {
+            if (_output["shapes"] == null) {
+                _output["shapes"] = new JsonData();
+            }
             // 如果有prim对象并且处于激活状态
             _output["shapes"].Add(MeshExporter.getPrimData(prim, transform));
         }
@@ -313,23 +382,14 @@ public class Paladin : MonoBehaviour {
 
 
     void handlePrimitives() {
-        _output["shapes"] = new JsonData();
+        _output["shapes"] = null;
         handleChild(transform);
-
-        //MeshFilter[] primitives = GameObject.FindObjectsOfType<MeshFilter>() as MeshFilter[];
-        //var shapeData = new JsonData();
-        //for(int i = 0; i < primitives.Length; ++i) {
-        //    var prim = primitives[i];
-        //    Debug.Log(prim.name);
-        //    shapeData.Add(MeshExporter.getPrimData(prim));
-        //}
-        //_output["shapes"] = shapeData;
     }
 
 
     void export() {
         string json = _output.ToJson(true);
-        var dir = "paladin_output" + "/" + outputName;
+        var dir = outputDir + "/" + outputName;
         if (!Directory.Exists(dir)) {
             Directory.CreateDirectory(dir);
         }
