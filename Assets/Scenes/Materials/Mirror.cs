@@ -17,11 +17,17 @@ public class Mirror : Material {
     }
 
     void UpdateMaterial() {
+        if (!this.isActiveAndEnabled) {
+            return;
+        }
         var mat = gameObject.GetComponent<Renderer>().material;
         mat.SetColor("_Kr", Kr);
     }
 
     private void Awake() {
+        if (!this.isActiveAndEnabled) {
+            return;
+        }
         InitName();
         UpdateMaterial();
     }

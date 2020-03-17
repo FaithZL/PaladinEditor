@@ -17,6 +17,9 @@ public class Unity : Material {
     }
 
     void InitName() {
+        if (!this.isActiveAndEnabled) {
+            return;
+        }
         var mat = gameObject.GetComponent<Renderer>().material;
         mat.name = "unity";
     }
@@ -27,6 +30,9 @@ public class Unity : Material {
     }
 
     void UpdateMaterial() {
+        if (!this.isActiveAndEnabled) {
+            return;
+        }
         var mat = gameObject.GetComponent<Renderer>().material;
         mat.SetColor("_Color", albedo);
         mat.SetFloat("_Metallic", metallic);

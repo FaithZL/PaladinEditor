@@ -6,6 +6,8 @@ using LitJson;
 public class MatExporter {
 
     static public JsonData getMaterialData(UnityEngine.Material mat) {
+
+        mat.name = getName(mat.name);
         switch (mat.name) {
             case "unity":
                 return getUnityMatData(mat);
@@ -18,8 +20,17 @@ public class MatExporter {
             case "mirror":
                 return getMirrorData(mat);
             default:
-                return null;
+                return getUnityMatData(mat);
         }
+    }
+
+    static string getName(string name) {
+        var idx = name.LastIndexOf("(");
+        if (idx >= 0) {
+            name = name.Substring(0, idx - 1);
+            name = name.ToLower();
+        }
+        return name;
     }
 
     static JsonData getUnityMatData(UnityEngine.Material mat) {

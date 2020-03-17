@@ -14,6 +14,9 @@ public class Matte : Material {
     }
 
     private void Awake() {
+        if (!this.isActiveAndEnabled) {
+            return;
+        }
         InitName();
         UpdateMaterial();
     }
@@ -24,6 +27,9 @@ public class Matte : Material {
     }
 
     void UpdateMaterial() {
+        if (!this.isActiveAndEnabled) {
+            return;
+        }
         var mat = gameObject.GetComponent<Renderer>().material;
         mat.SetColor("_Kd", Kd);
         mat.SetFloat("_sigma", sigma);

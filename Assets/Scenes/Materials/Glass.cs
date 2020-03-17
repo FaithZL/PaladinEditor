@@ -29,6 +29,9 @@ public class Glass : Material {
     }
 
     void UpdateMaterial() {
+        if (!this.isActiveAndEnabled) {
+            return;
+        }
         var mat = gameObject.GetComponent<Renderer>().material;
         mat.SetColor("_Kr", Kr);
         mat.SetColor("_Kt", Kt);
@@ -40,6 +43,9 @@ public class Glass : Material {
     }
 
     private void Awake() {
+        if(!this.isActiveAndEnabled) {
+            return;
+        }
         InitName();
         UpdateMaterial();
     }

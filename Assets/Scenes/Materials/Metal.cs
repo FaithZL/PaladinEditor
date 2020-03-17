@@ -21,6 +21,9 @@ public class Metal : Material {
     }
 
     private void Awake() {
+        if (!this.isActiveAndEnabled) {
+            return;
+        }
         InitName();
         updateMaterial();
     }
@@ -31,6 +34,9 @@ public class Metal : Material {
     }
 
     void updateMaterial() {
+        if (!this.isActiveAndEnabled) {
+            return;
+        }
         var mat = gameObject.GetComponent<Renderer>().material;
         mat.SetColor("_eta", eta);
         mat.SetColor("_k", k);
