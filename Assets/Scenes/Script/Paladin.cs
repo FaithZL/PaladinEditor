@@ -112,7 +112,8 @@ public class Paladin : MonoBehaviour {
         var texture = matSky.GetTexture("_MainTex");
         var rotation = matSky.GetFloat("_Rotation") + 180;
         var color = matSky.GetColor("_Tint");
-        var exposure = matSky.GetFloat("_Exposure") * 2;
+        var exposure = matSky.GetFloat("_Exposure");
+        exposure = 2 * (float)Math.Pow(exposure, 2) + 0.5f * exposure - 0.5f;
 
         var envmapData = new JsonData();
         envmapData["type"] = "envmap";
