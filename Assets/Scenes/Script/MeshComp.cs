@@ -31,10 +31,12 @@ public class MeshComp : MonoBehaviour
         var output = new JsonData();
         
         MeshFilter[] primitives = GetComponentsInChildren<MeshFilter>() as MeshFilter[];
-
         for (int i = 0; i < primitives.Length; ++i) {
             var prim = primitives[i];
-            output.Add(MeshExporter.getPrimParam(prim, transform));
+            string prgs = i + "/" + primitives.Length;
+            Debug.Log(prgs);
+            output.Add(MeshExporter.getPrimParam(prim, transform, comp));
+            //break;
         }
         
         sr.Write(output.ToJson(true));

@@ -75,6 +75,15 @@ public class Paladin : MonoBehaviour {
 
     private JsonData _output = new JsonData();
 
+    private long _vertexCount = 0;
+
+    private long _progress = 0;
+
+    public void updateProgress() {
+        _progress += 1;
+        //string s = _progress + "/" + _vertexCount;
+        //Debug.Log(s);
+    }
 
     void Start() {
         Debug.Log("导出");
@@ -91,7 +100,16 @@ public class Paladin : MonoBehaviour {
         Directory.CreateDirectory(dir);
     }
 
+    void statusVertexNum() {
+        MeshFilter[] primitives = GameObject.FindObjectsOfType<MeshFilter>() as MeshFilter[];
+        for(int i = 0; i < primitives.Length; ++i) {
+            _vertexCount += MeshExporter.getMeshVertexCount(primitives[i]);
+        }
+        Debug.Log(_vertexCount);
+    }
+
     void exec() {
+        statusVertexNum();
         handleCamera();
         handleFilm();
         handleFilter();
@@ -371,7 +389,7 @@ public class Paladin : MonoBehaviour {
                 _output["shapes"] = new JsonData();
             }
             // 如果有prim对象并且处于激活状态
-            _output["shapes"].Add(MeshExporter.getPrimData(prim, transform));
+            _output["shapes"].Add(MeshExporter.getPrimData(prim, transform, this));
         }
 
         foreach (Transform child in node.transform) {
@@ -399,5 +417,6 @@ public class Paladin : MonoBehaviour {
 
         sr.WriteLine(json);
         sr.Close();
+        Debug.Log(_progress);
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 using LitJson;
 
 public class MeshExporter {
-    static public JsonData getPrimParam(MeshFilter prim, Transform Parent) {
+    static public JsonData getPrimParam(MeshFilter prim, Transform Parent, Paladin paladin) {
 
         var param = new JsonData();
 
@@ -40,6 +40,7 @@ public class MeshExporter {
             var indices = mesh.GetIndices(i);
             for (int j = 0; j < indices.Length; ++j) {
                 indexes.Add(indices[j]);
+                paladin.updateProgress();
             }
         }
         param["verts"] = verts;
@@ -69,13 +70,25 @@ public class MeshExporter {
         return param;
     }
 
-    static public JsonData getPrimData(MeshFilter prim, Transform Parent) {
+    static public long getMeshVertexCount(MeshFilter prim) {
+        var mesh = prim.sharedMesh;
+        long ret = 0;
+
+        for (int i = 0; i < mesh.subMeshCount; ++i) {
+            var indices = mesh.GetIndices(i);
+            ret += indices.Length;
+        }
+
+        return ret;
+    }
+
+    static public JsonData getPrimData(MeshFilter prim, Transform Parent, Paladin paladin) {
         var ret = new JsonData();
 
         ret["type"] = "triMesh";
         ret["subType"] = "mesh";
 
-        ret["param"] = getPrimParam(prim, Parent);
+        ret["param"] = getPrimParam(prim, Parent, paladin);
         ret["name"] = prim.name;
         
         return ret;
