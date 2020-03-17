@@ -92,6 +92,10 @@ public class Paladin : MonoBehaviour {
         childThread.Start();
     }
 
+    private void Awake() {
+        clearDir();
+    }
+
     void onProgress() {
         while (true) {
             float percent = (float)_progress / _vertexCount;
@@ -106,8 +110,6 @@ public class Paladin : MonoBehaviour {
 
     void Start() {
         Debug.Log("导出");
-        clearDir();
-        startReporter();
         exec();
         export();
         Debug.Log("导出完毕");

@@ -926,7 +926,7 @@ MonoBehaviour:
   scale: 1
   diagonal: 1
   samplerName: 0
-  spp: 64
+  spp: 32
   xSpp: 1
   ySpp: 1
   dimensions: 6
@@ -1267,7 +1267,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 1ce9ba61ca1d040aaba5fe82bd4b7017,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.45
+      value: -0.64
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 1ce9ba61ca1d040aaba5fe82bd4b7017,
         type: 3}

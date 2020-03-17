@@ -70,6 +70,13 @@ public class MeshExporter {
         return param;
     }
 
+    static public JsonData getPrimData() {
+        var ret = new JsonData();
+
+
+        return ret;
+    }
+
     static public long getMeshVertexCount(MeshFilter prim) {
         var mesh = prim.sharedMesh;
         long ret = 0;
@@ -102,7 +109,26 @@ public class MeshExporter {
         return ret;
     }
 
-    static JsonData getEmissionData(MeshFilter prim) {
+    public static JsonData getEmissionData(Emission emission) {
+
+        if (emission == null) {
+            return null;
+        }
+
+        var ret = new JsonData();
+
+        ret["scale"] = emission.scale;
+        ret["nSamples"] = emission.sampleNum;
+        ret["twoSided"] = emission.twoSided;
+        var Le = new JsonData();
+        Le["colorType"] = 1;
+        Le["color"] = fromColor(emission.color);
+        ret["Le"] = Le;
+
+        return ret;
+    }
+
+    public static JsonData getEmissionData(MeshFilter prim) {
 
         Emission emission = prim.gameObject.GetComponent<Emission>();
 
