@@ -32,6 +32,8 @@ public class MeshComp : MonoBehaviour
 
     string _dir;
 
+    Paladin _paladin;
+
     private void Awake() {
         fileName = fileName == "" ? this.name : fileName;
     }
@@ -45,7 +47,9 @@ public class MeshComp : MonoBehaviour
 
         _output = new JsonData();
 
-        var comp = this.GetComponentInParent<Paladin>();
+        _paladin = this.GetComponentInParent<Paladin>();
+
+        var comp = _paladin;
         _dir = comp.outputDir + "/" + comp.outputName;
         _filePath = _dir + "/" + fileName + ".json";
 
@@ -117,6 +121,7 @@ public class MeshComp : MonoBehaviour
             var indices = prim.indices[i];
             for (int j = 0; j < indices.Length; ++j) {
                 indexes.Add(indices[j]);
+                _paladin.updateProgress();
             }
         }
         param["verts"] = verts;

@@ -110,6 +110,7 @@ public class Paladin : MonoBehaviour {
 
     void Start() {
         Debug.Log("导出");
+        
         exec();
         export();
         Debug.Log("导出完毕");
@@ -131,6 +132,7 @@ public class Paladin : MonoBehaviour {
 
     void exec() {
         statusVertexNum();
+        startReporter();
         handleCamera();
         handleFilm();
         handleFilter();
