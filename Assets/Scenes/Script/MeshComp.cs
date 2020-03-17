@@ -21,6 +21,7 @@ public class MeshComp : MonoBehaviour
         if (!Directory.Exists(dir)) {
             Directory.CreateDirectory(dir);
         }
+        Debug.Log(filePath);
 
         if (File.Exists(filePath)) {
             return;
@@ -33,12 +34,10 @@ public class MeshComp : MonoBehaviour
         MeshFilter[] primitives = GetComponentsInChildren<MeshFilter>() as MeshFilter[];
         for (int i = 0; i < primitives.Length; ++i) {
             var prim = primitives[i];
-            string prgs = i + "/" + primitives.Length;
-            Debug.Log(prgs);
             output.Add(MeshExporter.getPrimParam(prim, transform, comp));
             //break;
         }
-        
+        Debug.Log(filePath);
         sr.Write(output.ToJson(true));
 
         sr.Close();

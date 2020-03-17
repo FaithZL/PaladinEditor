@@ -6,6 +6,7 @@ using LitJson;
 using UnityEngine.Assertions;
 using System.IO;
 using UnityEditor;
+using System.Threading;
 
 public class Paladin : MonoBehaviour {
 
@@ -79,15 +80,34 @@ public class Paladin : MonoBehaviour {
 
     private long _progress = 0;
 
+    private ThreadStart progressReporter;
+
     public void updateProgress() {
         _progress += 1;
-        //string s = _progress + "/" + _vertexCount;
-        //Debug.Log(s);
+    }
+
+    void startReporter() {
+        progressReporter = new ThreadStart(onProgress);
+        Thread childThread = new Thread(progressReporter);
+        childThread.Start();
+    }
+
+    void onProgress() {
+        while (true) {
+            float percent = (float)_progress / _vertexCount;
+            string s = "total is " + _vertexCount + ",progress is " + _progress + ",percent is " + percent;
+            Debug.Log(s);
+            Thread.Sleep(1000);
+            if (percent == 1) {
+                return;
+            }
+        }
     }
 
     void Start() {
         Debug.Log("导出");
         clearDir();
+        startReporter();
         exec();
         export();
         Debug.Log("导出完毕");
@@ -105,7 +125,6 @@ public class Paladin : MonoBehaviour {
         for(int i = 0; i < primitives.Length; ++i) {
             _vertexCount += MeshExporter.getMeshVertexCount(primitives[i]);
         }
-        Debug.Log(_vertexCount);
     }
 
     void exec() {
@@ -417,6 +436,5 @@ public class Paladin : MonoBehaviour {
 
         sr.WriteLine(json);
         sr.Close();
-        Debug.Log(_progress);
     }
 }
