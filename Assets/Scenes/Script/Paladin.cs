@@ -178,6 +178,7 @@ public class Paladin : MonoBehaviour {
         param["L"] = Util.fromColor(color);
         param["nSamples"] = 1;
         param["transform"] = transformLst;
+        param["fromBasePath"] = true;
 
         
         var srcFn = AssetDatabase.GetAssetPath(texture);
