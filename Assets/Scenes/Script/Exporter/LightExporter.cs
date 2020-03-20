@@ -64,7 +64,7 @@ public class LightExporter {
         L["color"] = fromVec3(new Vector3(c.r, c.g, c.b));
         param["L"] = L;
 
-        param["scale"] = light.intensity;
+        param["scale"] = light.intensity * 2.5;
 
         ret["param"] = param;
 

@@ -68,7 +68,7 @@ public class MatExporter {
         }
         albedo.Add(texData);
         param["albedo"] = albedo;
-        param["scale"] = mat.GetFloat("_BumpScale");
+        param["bumpScale"] = mat.GetFloat("_BumpScale");
 
 
         var normalMap = mat.GetTexture("_BumpMap");
@@ -83,7 +83,7 @@ public class MatExporter {
             }
             normalMapData["param"] = new JsonData();
             normalMapData["subtype"] = "spectrum";
-
+            normalMapData["type"] = "image";
             normalMapData["param"]["fileName"] = fn;
             normalMapData["param"]["fromBasePath"] = true;
             param["normalMap"] = normalMapData;
