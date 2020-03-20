@@ -4,14 +4,17 @@
     {
         _Color ("Color", Color) = (1,1,1,1)
         _MainTex ("Albedo (RGB)", 2D) = "white" {}
-
-        _Smoothness ("Smoothness", Range(0,1)) = 0.5
+        
+        _Glossiness ("Smoothness", Range(0,1)) = 0.5
         _Metallic ("Metallic", Range(0,1)) = 0.0
 
-        _NormalTex("normal map", 2D) = "white" {}
+        _BumpMap("normal map", 2D) = "white" {}
+        _BumpScale("normal map scale", Range(-1,1)) = -1
 
-        _EmissionTex("emission map", 2D) = "black" {}
-        _Emission("emission", Color) = (0,0,0,0)
+        _EmissionMap("emission map", 2D) = "black" {}
+        _EmissionColor("emission", Color) = (0,0,0,0)
+
+        _F0("F0", Color) = (0,0,0,0)
 
         _SpecularTex("specular map", 2D) = "white" {}
         _Specular("specular", Color) = (1,1,1,1)
@@ -35,7 +38,7 @@
             float2 uv_MainTex;
         };
 
-        half _Smoothness;
+        half _Glossiness;
         half _Metallic;
         fixed4 _Color;
 
@@ -53,7 +56,7 @@
             o.Albedo = c.rgb;
             // Metallic and smoothness come from slider variables
             o.Metallic = _Metallic;
-            o.Smoothness = _Smoothness;
+            o.Smoothness = _Glossiness;
             o.Alpha = c.a;
         }
         ENDCG

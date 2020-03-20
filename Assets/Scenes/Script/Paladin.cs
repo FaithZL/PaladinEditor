@@ -87,9 +87,9 @@ public class Paladin : MonoBehaviour {
     }
 
     void startReporter() {
-        progressReporter = new ThreadStart(onProgress);
-        Thread childThread = new Thread(progressReporter);
-        childThread.Start();
+        //progressReporter = new ThreadStart(onProgress);
+        //Thread childThread = new Thread(progressReporter);
+        //childThread.Start();
     }
 
     private void Awake() {
@@ -151,7 +151,7 @@ public class Paladin : MonoBehaviour {
             return;
         }
         var texture = matSky.GetTexture("_MainTex");
-        var rotation = matSky.GetFloat("_Rotation") + 180;
+        var rotation = - matSky.GetFloat("_Rotation") - 180;
         var color = matSky.GetColor("_Tint");
         var exposure = matSky.GetFloat("_Exposure");
         exposure = 2 * (float)Math.Pow(exposure, 2) + 0.5f * exposure - 0.5f;

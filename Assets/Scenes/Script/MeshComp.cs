@@ -65,7 +65,7 @@ public class MeshComp : MonoBehaviour
                 primitive.indices[j] = mesh.GetIndices(j);
             }
             var material = prim.GetComponent<Renderer>().material;
-            primitive.materialData = MatExporter.getMaterialData(material);
+            primitive.materialData = MatExporter.getMaterialData(material, comp);
             primitive.emission = prim.gameObject.GetComponent<Emission>();
             primitive.localToWorldMatrix = prim.transform.localToWorldMatrix;
             _primitives[i] = primitive;

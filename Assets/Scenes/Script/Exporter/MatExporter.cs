@@ -2,29 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 using LitJson;
+using UnityEditor;
+using System.IO;
 
 public class MatExporter {
 
-    static public JsonData getMaterialData(UnityEngine.Material mat) {
-
+    static public JsonData getMaterialData(UnityEngine.Material mat, Paladin paladin = null) {
+        Debug.Log(mat.name);
         mat.name = getName(mat.name);
         switch (mat.name) {
             case "unity":
-                return getUnityMatData(mat);
+                return getUnityMatData(mat, paladin);
             case "matte":
-                return getMatteData(mat);
+                return getMatteData(mat,paladin);
             case "metal":
-                return getMetalData(mat);
+                return getMetalData(mat,paladin);
             case "glass":
-                return getGlassData(mat);
+                return getGlassData(mat,paladin);
             case "mirror":
-                return getMirrorData(mat);
+                return getMirrorData(mat,paladin);
             default:
-                return getUnityMatData(mat);
+                mat.name = "unity";
+                return getUnityMatData(mat,paladin);
         }
     }
 
-    static string getName(string name) {
+    static string getName(string name, Paladin paladin = null) {
         var idx = name.LastIndexOf("(");
         if (idx >= 0) {
             name = name.Substring(0, idx - 1);
@@ -33,13 +36,61 @@ public class MatExporter {
         return name;
     }
 
-    static JsonData getUnityMatData(UnityEngine.Material mat) {
+    static JsonData getUnityMatData(UnityEngine.Material mat, Paladin paladin = null) {
         var ret = new JsonData();
         ret["type"] = mat.name;
 
         var param = new JsonData();
-        param["albedo"] = Util.fromColor(mat.GetColor("_Color"));
-        param["roughness"] = 1 - mat.GetFloat("_Smoothness");
+        var albedo = new JsonData();
+        var color = Util.fromColor(mat.GetColor("_Color"));
+        albedo.Add(color);
+
+        var mainTex = mat.GetTexture("_MainTex");
+        var texData = new JsonData();
+        if (mainTex != null) {
+            texData["type"] = "image";
+            var srcFn = AssetDatabase.GetAssetPath(mainTex);
+            var idx = srcFn.LastIndexOf("/");
+            var dstFn = paladin.outputDir + "/" + paladin.outputName + srcFn.Substring(idx);
+            var fn = srcFn.Substring(idx + 1);
+            if (!File.Exists(dstFn)) {
+                FileUtil.CopyFileOrDirectory(srcFn, dstFn);
+            }
+            texData["param"] = new JsonData();
+            texData["subtype"] = "spectrum";
+            
+            texData["param"]["fileName"] = fn;
+            texData["param"]["fromBasePath"] = true;
+        } else {
+            texData.Add(1);
+            texData.Add(1);
+            texData.Add(1);
+        }
+        albedo.Add(texData);
+        param["albedo"] = albedo;
+        param["scale"] = mat.GetFloat("_BumpScale");
+
+
+        var normalMap = mat.GetTexture("_BumpMap");
+        if (normalMap != null) {
+            var normalMapData = new JsonData();
+            var srcFn = AssetDatabase.GetAssetPath(normalMap);
+            var idx = srcFn.LastIndexOf("/");
+            var dstFn = paladin.outputDir + "/" + paladin.outputName + srcFn.Substring(idx);
+            var fn = srcFn.Substring(idx + 1);
+            if (!File.Exists(dstFn)) {
+                FileUtil.CopyFileOrDirectory(srcFn, dstFn);
+            }
+            normalMapData["param"] = new JsonData();
+            normalMapData["subtype"] = "spectrum";
+
+            normalMapData["param"]["fileName"] = fn;
+            normalMapData["param"]["fromBasePath"] = true;
+            param["normalMap"] = normalMapData;
+        }
+
+
+        param["roughness"] = 1 - mat.GetFloat("_Glossiness");
         param["metallic"] = mat.GetFloat("_Metallic");
         ret["param"] = param;
 
@@ -47,7 +98,7 @@ public class MatExporter {
     }
 
 
-    static JsonData getMatteData(UnityEngine.Material mat) {
+    static JsonData getMatteData(UnityEngine.Material mat, Paladin paladin = null) {
         var ret = new JsonData();
 
         ret["type"] = mat.name;
@@ -60,7 +111,7 @@ public class MatExporter {
         return ret;
     }
 
-    static JsonData getMetalData(UnityEngine.Material mat) {
+    static JsonData getMetalData(UnityEngine.Material mat, Paladin paladin = null) {
         var ret = new JsonData();
         ret["type"] = mat.name;
 
@@ -77,7 +128,7 @@ public class MatExporter {
         return ret;
     }
 
-    static JsonData getMirrorData(UnityEngine.Material mat) {
+    static JsonData getMirrorData(UnityEngine.Material mat, Paladin paladin = null) {
         var ret = new JsonData();
 
         ret["type"] = mat.name;
@@ -89,7 +140,7 @@ public class MatExporter {
         return ret;
     }
 
-    static JsonData getGlassData(UnityEngine.Material mat) {
+    static JsonData getGlassData(UnityEngine.Material mat, Paladin paladin = null) {
         var ret = new JsonData();
 
         ret["type"] = mat.name;

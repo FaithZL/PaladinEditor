@@ -64,7 +64,7 @@ public class MeshExporter {
         param["transform"] = transformData;
 
         param["indexes"] = indexes;
-        param["material"] = MatExporter.getMaterialData(mat);
+        param["material"] = MatExporter.getMaterialData(mat, paladin);
         param["emission"] = getEmissionData(prim);
 
         return param;
