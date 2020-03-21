@@ -9,7 +9,7 @@ public class MeshExporter {
         var param = new JsonData();
 
         var mesh = prim.sharedMesh;
-        var mat = prim.GetComponent<Renderer>().material;
+        var mats = prim.GetComponent<Renderer>().materials;
 
         var normals = new JsonData();
         var verts = new JsonData();
@@ -38,10 +38,12 @@ public class MeshExporter {
 
         for (int i = 0; i < mesh.subMeshCount; ++i) {
             var indices = mesh.GetIndices(i);
+            var subIndexes = new JsonData();
             for (int j = 0; j < indices.Length; ++j) {
-                indexes.Add(indices[j]);
+                subIndexes.Add(indices[j]);
                 paladin.updateProgress();
             }
+            indexes.Add(subIndexes);
         }
         param["verts"] = verts;
         if (mesh.normals.Length > 0) {
@@ -64,7 +66,11 @@ public class MeshExporter {
         param["transform"] = transformData;
 
         param["indexes"] = indexes;
-        param["material"] = MatExporter.getMaterialData(mat, paladin);
+        param["material"] = new JsonData();
+        for(int i = 0; i < mats.Length; ++i) {
+            var mat = mats[i];
+            param["material"].Add(MatExporter.getMaterialData(mat, paladin));
+        }
         param["emission"] = getEmissionData(prim);
 
         return param;

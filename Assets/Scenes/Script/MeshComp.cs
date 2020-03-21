@@ -61,11 +61,17 @@ public class MeshComp : MonoBehaviour
             primitive.vertices = mesh.vertices;
             primitive.UVs = mesh.uv;
             primitive.indices = new int[mesh.subMeshCount][];
-            for(int j = 0; j < mesh.subMeshCount; ++j) {
+            var materials = prim.GetComponent<Renderer>().materials;
+            for (int j = 0; j < mesh.subMeshCount; ++j) {
                 primitive.indices[j] = mesh.GetIndices(j);
             }
             var material = prim.GetComponent<Renderer>().material;
-            primitive.materialData = MatExporter.getMaterialData(material, comp);
+            primitive.materialData = new JsonData();
+            for(int j = 0; j < materials.Length; ++j) {
+                primitive.materialData.Add(MatExporter.getMaterialData(material, comp));
+            }
+            //primitive.materialData = MatExporter.getMaterialData(material, comp);
+
             primitive.emission = prim.gameObject.GetComponent<Emission>();
             primitive.localToWorldMatrix = prim.transform.localToWorldMatrix;
             _primitives[i] = primitive;
@@ -119,10 +125,12 @@ public class MeshComp : MonoBehaviour
 
         for (int i = 0; i < prim.indices.Length; ++i) {
             var indices = prim.indices[i];
+            var subIndices = new JsonData();
             for (int j = 0; j < indices.Length; ++j) {
-                indexes.Add(indices[j]);
+                subIndices.Add(indices[j]);
                 _paladin.updateProgress();
             }
+            indexes.Add(subIndices);
         }
         param["verts"] = verts;
         if (prim.normals.Length > 0) {
