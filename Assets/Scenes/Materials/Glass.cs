@@ -8,11 +8,11 @@ public class Glass : Material {
 
     public Color Kt = new Color(1, 1, 1);
 
-    [Range(0.01f, 1)]
-    public float uRoughness = 0.01f;
+    [Range(0, 1)]
+    public float uRoughness = 0;
 
-    [Range(0.01f, 1)]
-    public float vRoughness = 0.01f;
+    [Range(0, 1)]
+    public float vRoughness = 0;
 
     [Range(0, 3)]
     public float eta = 1;

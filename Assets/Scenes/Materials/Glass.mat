@@ -73,7 +73,7 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
-    - _eta: 1.5
+    - _eta: 1.2
     - _remapRoughness: 0
     - _sigma: 0.5
     - _thin: 1

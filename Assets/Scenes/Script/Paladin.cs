@@ -118,7 +118,7 @@ public class Paladin : MonoBehaviour {
 
     void clearDir() {
         var dir = outputDir + "/" + outputName;
-        if (Directory.Exists(dir)) 
+        if (Directory.Exists(dir))
             Directory.Delete(dir, true);
         Directory.CreateDirectory(dir);
     }
