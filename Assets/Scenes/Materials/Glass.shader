@@ -6,9 +6,10 @@
 
 		_Kr ("Kr", Color) = (1, 1, 1, 1)
         _Kt ("Kt", Color) = (1, 1, 1, 1)
-        _uRoughness("uRoughness", Range(0.01, 1)) = 0.01
-        _vRoughness("vRoughness", Range(0.01, 1)) = 0.01
+        _uRoughness("uRoughness", Range(0, 1)) = 0.01
+        _vRoughness("vRoughness", Range(0, 1)) = 0.01
         _eta("eta", float) = 1
+        _thin("thin", int) = 0
         _remapRoughness("remapRoughness", int) = 0
 	}
 	SubShader {

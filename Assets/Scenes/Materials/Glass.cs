@@ -17,6 +17,8 @@ public class Glass : Material {
     [Range(0, 3)]
     public float eta = 1;
 
+    public bool thin = false;
+
     public bool remapRoughness = false;
 
     public override string getType() {

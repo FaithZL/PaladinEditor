@@ -152,7 +152,9 @@ public class MatExporter {
         param["vRough"] = mat.GetFloat("_vRoughness");
         param["eta"] = mat.GetFloat("_eta");
         bool remap = mat.GetInt("_remapRoughness") != 0;
+        bool thin = mat.GetInt("_thin") != 0;
         param["remapRough"] = remap;
+        param["thin"] = thin;
         ret["param"] = param;
 
         return ret;
