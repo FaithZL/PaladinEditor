@@ -3,6 +3,7 @@ Library
 Logs
 obj
 Temp
+Assets/models
 Assembly-CSharp.csproj
 Assembly-CSharp-Editor.csproj
 PaladinEditor.sln

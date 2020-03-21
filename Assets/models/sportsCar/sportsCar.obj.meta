@@ -3,12 +3,202 @@ guid: 0270032c7f7fc41c7ba8a6af9a7fce33
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BodyGlossBlackMat
+    second: {fileID: 2100000, guid: 067074e0991db4bc4bab71d5eaa009d5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BodyMat
+    second: {fileID: 2100000, guid: 42c04045113bb460c908cfe10dee8202, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BodyMat_BK
+    second: {fileID: 2100000, guid: 6aeb86a4952c24a159922bc50c25586f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BoltSilver
+    second: {fileID: 2100000, guid: 2fb301099a6334019b0aebbdcefcddd7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BrakeRotarySilver
+    second: {fileID: 2100000, guid: 5aea059b62da44480b8c8d65b9317095, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CamCover
+    second: {fileID: 2100000, guid: eda67b96ba5564ad19505393ffa45409, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CarbonBlack
+    second: {fileID: 2100000, guid: 2220d1a33a16c440e9c37bbc117d79dd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Chassis_Black
+    second: {fileID: 2100000, guid: 10069f69dd3134f91937cf16cdfe1544, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EngineSilver2
+    second: {fileID: 2100000, guid: c0f4e39cda5f0402cb27a00c3e8fe66b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: GlassMat
+    second: {fileID: 2100000, guid: 85c28721383014e75b869f500253ec86, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: GomBlack
+    second: {fileID: 2100000, guid: 7ae7e4c7f7a1347b791edaa761a02bf7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: HeadLightBK_Mat
+    second: {fileID: 2100000, guid: efc50f1d115af4cc3b173f308aa73fe4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: HeadLight_LED
+    second: {fileID: 2100000, guid: 464bc6765ef284c8e86deb19e92852e1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Interior_Black
+    second: {fileID: 2100000, guid: 8e18ea8bdd65344f88ade3b608b3c158, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Interior_GlossBlack
+    second: {fileID: 2100000, guid: bb547161378a44200abf13a3be7fa97d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Interior_Monitor
+    second: {fileID: 2100000, guid: d2e71f4fcdc634ff9b7d378829dd957f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Interior_Red
+    second: {fileID: 2100000, guid: c0398f079909d49b1a9cefbe6872f77b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Interior_Silver
+    second: {fileID: 2100000, guid: b0cce8e601c6f460a869fd7a471f938e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Interior_White
+    second: {fileID: 2100000, guid: 42884ede5da4547a8ad0645a4da231bd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: LightReflectMat
+    second: {fileID: 2100000, guid: 1cc3fa24255b34a8da187454cd9468ec, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MeshBlack
+    second: {fileID: 2100000, guid: e429d7025b2e04de7b3ffd6bbcf6739e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MirrorMat
+    second: {fileID: 2100000, guid: 06ed44a800fa04cf19813669b9f10b80, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: PedalsSilver_mat
+    second: {fileID: 2100000, guid: f34ab447130fb4d39a57912fd948561e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: RearLights
+    second: {fileID: 2100000, guid: 35825b4a10b124a098dbad52b197cfc1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: RedMat
+    second: {fileID: 2100000, guid: ad399af6078424adca23ea2f79a43867, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: SeatColor
+    second: {fileID: 2100000, guid: 7d3690546eba84b198b85de43ea61442, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Seat_Black
+    second: {fileID: 2100000, guid: cfe556b427be84a98a684387a83b8789, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: SmallHeadLights
+    second: {fileID: 2100000, guid: a7c6e59ae290b4e5084c201c443d305f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: SpotLightCover_Mat
+    second: {fileID: 2100000, guid: 1d73eb60047884c36abfda86386444f9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: StopLightBK_Mat
+    second: {fileID: 2100000, guid: 60433edf6c3b342f6ae1407fe00e3431, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: SusArm_Silver2
+    second: {fileID: 2100000, guid: d7f3847325d614ae8b05db4e82433a95, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Suspention_Black
+    second: {fileID: 2100000, guid: 14de102ce10184975af00d982e685f10, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Suspention_Red
+    second: {fileID: 2100000, guid: 2151aba4d24414a1881a1cc9b2081957, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TireMat
+    second: {fileID: 2100000, guid: e9697ea93148e4b0fb9def49938a52a8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: WheelHubColor
+    second: {fileID: 2100000, guid: 09f6595bc25ce4e6888d50d526c8f005, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: WindowGlassMat
+    second: {fileID: 2100000, guid: 315fffffcf1d648ada030d5a87b7ac2d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Winker_Mat
+    second: {fileID: 2100000, guid: 508f50a902d734fd1829fee6f5bdb462, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: suspension_red
+    second: {fileID: 2100000, guid: 55c7f191ebd914b94922e0fbaa940120, type: 2}
   materials:
     materialImportMode: 1
     materialName: 2
     materialSearch: 1
-    materialLocation: 0
+    materialLocation: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
