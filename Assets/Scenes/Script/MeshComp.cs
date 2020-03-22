@@ -65,10 +65,9 @@ public class MeshComp : MonoBehaviour
             for (int j = 0; j < mesh.subMeshCount; ++j) {
                 primitive.indices[j] = mesh.GetIndices(j);
             }
-            var material = prim.GetComponent<Renderer>().material;
             primitive.materialData = new JsonData();
             for(int j = 0; j < materials.Length; ++j) {
-                primitive.materialData.Add(MatExporter.getMaterialData(material, comp));
+                primitive.materialData.Add(MatExporter.getMaterialData(materials[j], comp));
             }
             //primitive.materialData = MatExporter.getMaterialData(material, comp);
 
@@ -153,7 +152,7 @@ public class MeshComp : MonoBehaviour
         param["transform"] = transformData;
 
         param["indexes"] = indexes;
-        param["material"] = prim.materialData;
+        param["materials"] = prim.materialData;
         param["emission"] = MeshExporter.getEmissionData(prim.emission);
 
         return param;

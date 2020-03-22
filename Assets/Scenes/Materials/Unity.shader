@@ -18,6 +18,9 @@
 
         _SpecularTex("specular map", 2D) = "white" {}
         _Specular("specular", Color) = (1,1,1,1)
+
+        _Parallax ("Height Scale", Range (0.005, 0.08)) = 0.02
+        _ParallaxMap ("Height Map", 2D) = "black" {}
     }
     SubShader
     {

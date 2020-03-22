@@ -66,10 +66,10 @@ public class MeshExporter {
         param["transform"] = transformData;
 
         param["indexes"] = indexes;
-        param["material"] = new JsonData();
+        param["materials"] = new JsonData();
         for(int i = 0; i < mats.Length; ++i) {
             var mat = mats[i];
-            param["material"].Add(MatExporter.getMaterialData(mat, paladin));
+            param["materials"].Add(MatExporter.getMaterialData(mat, paladin));
         }
         param["emission"] = getEmissionData(prim);
 

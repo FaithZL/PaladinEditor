@@ -89,6 +89,23 @@ public class MatExporter {
             param["normalMap"] = normalMapData;
         }
 
+        var bumpMap = mat.GetTexture("_ParallaxMap");
+        if (bumpMap != null) {
+            var bumpMapData = new JsonData();
+            var srcFn = AssetDatabase.GetAssetPath(normalMap);
+            var idx = srcFn.LastIndexOf("/");
+            var dstFn = paladin.outputDir + "/" + paladin.outputName + srcFn.Substring(idx);
+            var fn = srcFn.Substring(idx + 1);
+            if (!File.Exists(dstFn)) {
+                FileUtil.CopyFileOrDirectory(srcFn, dstFn);
+            }
+            bumpMapData["param"] = new JsonData();
+            bumpMapData["subtype"] = "spectrum";
+            bumpMapData["type"] = "image";
+            bumpMapData["param"]["fileName"] = fn;
+            bumpMapData["param"]["fromBasePath"] = true;
+            param["bumpMap"] = bumpMapData;
+        }
 
         param["roughness"] = 1 - mat.GetFloat("_Glossiness");
         param["metallic"] = mat.GetFloat("_Metallic");
