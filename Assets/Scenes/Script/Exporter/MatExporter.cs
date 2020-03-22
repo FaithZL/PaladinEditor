@@ -92,7 +92,7 @@ public class MatExporter {
         var bumpMap = mat.GetTexture("_ParallaxMap");
         if (bumpMap != null) {
             var bumpMapData = new JsonData();
-            var srcFn = AssetDatabase.GetAssetPath(normalMap);
+            var srcFn = AssetDatabase.GetAssetPath(bumpMap);
             var idx = srcFn.LastIndexOf("/");
             var dstFn = paladin.outputDir + "/" + paladin.outputName + srcFn.Substring(idx);
             var fn = srcFn.Substring(idx + 1);

@@ -72,10 +72,26 @@ public class LightExporter {
     }
 
     static JsonData getSpotLight(Light light) {
-        var ret = new JsonData(null);
+        var ret = new JsonData();
 
-        // todo
+        ret["type"] = "spot";
+        var param = new JsonData();
 
+        var matrix = light.transform.localToWorldMatrix;
+        var transformData = new JsonData();
+        transformData["type"] = "matrix";
+        transformData["param"] = Util.fromMatrix(matrix);
+        param["transform"] = transformData;
+
+        var I = new JsonData();
+        I["colorType"] = 1;
+        var c = light.color;
+        I["color"] = fromVec3(new Vector3(c.r, c.g, c.b));
+        param["I"] = I;
+
+        param["scale"] = light.intensity;
+
+        ret["param"] = param;
         return ret;
     }
 
