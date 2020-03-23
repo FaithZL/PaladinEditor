@@ -70,6 +70,14 @@ public class MatExporter {
         param["albedo"] = albedo;
         param["bumpScale"] = mat.GetFloat("_BumpScale");
 
+        var emission = mat.GetColor("_EmissionColor");
+        if (emission != null) {
+            var emissionData = new JsonData();
+            param["emission"] = emissionData;
+            emissionData["Le"] = new JsonData();
+            emissionData["Le"]["colorType"] = 1;
+            emissionData["Le"]["color"] = Util.fromColor(emission);
+        }
 
         var normalMap = mat.GetTexture("_BumpMap");
         if (normalMap != null) {

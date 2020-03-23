@@ -90,7 +90,8 @@ public class LightExporter {
         param["I"] = I;
 
         param["scale"] = light.intensity;
-
+        param["totalAngle"] = light.spotAngle / 2;
+        param["falloffStart"] = 0;
         ret["param"] = param;
         return ret;
     }
