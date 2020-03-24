@@ -8,13 +8,22 @@ using System.IO;
 using UnityEditor;
 using System.Threading;
 
+//public struct Medium {
+//    public float g;
+//    public Color sigma_a;
+//    public Color sigma_s;
+//}
+
 public class Paladin : MonoBehaviour {
 
     public string outputDir = "paladin_output";
 
     public int threadNum = 0;
 
-    //[Header("--------medium--------")]
+    [Header("--------global medium--------")]
+    public float g;
+    public Color sigma_a;
+    public Color sigma_s;
 
     [Header("--------filter param--------")]
     public Filter filterName;
@@ -135,6 +144,7 @@ public class Paladin : MonoBehaviour {
         startReporter();
         handleCamera();
         handleFilm();
+        handleMediums();
         handleFilter();
         handleSampler();
         handlePrimitives();
@@ -143,6 +153,22 @@ public class Paladin : MonoBehaviour {
         handleEnvMap();
         handleAccelerator();
         handleThreadNum();
+    }
+
+    void handleMediums() {
+        if(sigma_a.maxColorComponent == 0 && sigma_s.maxColorComponent == 0) {
+            return;
+        }
+
+        var mediums = new JsonData();
+        var medium = new JsonData();
+        mediums["global"] = medium;
+
+        medium["g"] = g;
+        medium["sigma_a"] = Util.fromColor(sigma_a);
+        medium["sigma_s"] = Util.fromColor(sigma_s);
+
+        _output["mediums"] = mediums;
     }
 
     void handleEnvMap() {
