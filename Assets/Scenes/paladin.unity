@@ -707,6 +707,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outputDir: paladin_output
   threadNum: 0
+  g: 0
+  sigma_a: {r: 0.8113208, g: 0.8113208, b: 0.8113208, a: 0}
+  sigma_s: {r: 0, g: 0, b: 0, a: 0}
   filterName: 1
   filterRadius: {x: 1, y: 1}
   alpha: 2
