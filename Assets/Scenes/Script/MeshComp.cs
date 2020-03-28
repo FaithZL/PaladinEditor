@@ -4,6 +4,8 @@ using UnityEngine;
 using LitJson;
 using System.IO;
 using System.Threading;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 struct Primitive {
     public Vector3[] normals;
@@ -13,6 +15,11 @@ struct Primitive {
     public JsonData materialData;
     public Emission emission;
     public Matrix4x4 localToWorldMatrix;
+}
+
+public enum FileType {
+    bson,
+    json
 }
 
 public class MeshComp : MonoBehaviour
@@ -32,10 +39,16 @@ public class MeshComp : MonoBehaviour
 
     string _dir;
 
+    public FileType fileType;
+
     Paladin _paladin;
 
     private void Awake() {
         fileName = fileName == "" ? this.name : fileName;
+    }
+
+    public string extName() {
+        return fileType == FileType.bson ? "bson" : "json";
     }
 
     void initPrimitives() {
@@ -51,7 +64,7 @@ public class MeshComp : MonoBehaviour
 
         var comp = _paladin;
         _dir = comp.outputDir + "/" + comp.outputName;
-        _filePath = _dir + "/" + fileName + ".json";
+        _filePath = _dir + "/" + fileName + "." + extName();
 
         for (int i = 0; i < primitives.Length; ++i) {
             var prim = primitives[i];
@@ -85,12 +98,13 @@ public class MeshComp : MonoBehaviour
     }
 
     void asyncExport() {
+        var data = new JsonData();
         for(int i = 0; i < _primitives.Length; ++i) {
             var prim = _primitives[i];
-            var data = getPrimData(prim);
-            _output.Add(data);
+            
+            data.Add(getPrimData(prim));
         }
-
+        _output["data"] = data;
         saveToFile();
     }
 
@@ -166,13 +180,15 @@ public class MeshComp : MonoBehaviour
         if (File.Exists(_filePath)) {
             return;
         }
-
-        var sr = File.CreateText(_filePath);
-
-
-        sr.Write(_output.ToJson(true));
-
-        sr.Close();
+        if(fileType == FileType.json) {
+            var sr = File.CreateText(_filePath);
+            sr.Write(_output.ToJson(true));
+            sr.Close();
+        } else {
+            JObject jo = (JObject)JsonConvert.DeserializeObject(_output.ToJson());
+            File.WriteAllBytes(_filePath, Util.jsonToBytes(jo));
+        }
+        
         Debug.Log("baocun");
     }
 

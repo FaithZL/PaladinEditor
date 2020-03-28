@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using LitJson;
 using System;
+using Newtonsoft.Json.Linq;
+using System.IO;
+using Newtonsoft.Json.Bson;
+using Newtonsoft.Json;
 
 public class Util {
 
@@ -64,5 +68,19 @@ public class Util {
             matrixParam.Add((double)row.w);
         }
         return matrixParam;
+    }
+
+    static public byte[] jsonToBytes(JObject str) {
+        using (var ms = new MemoryStream()) {
+            using (var bw = new BsonWriter(ms)) {
+                var serializer = new JsonSerializer();
+
+                serializer.Serialize(bw, str);
+
+                bw.Flush();
+            }
+
+            return ms.ToArray();
+        }
     }
 }

@@ -168,11 +168,15 @@ public class Paladin : MonoBehaviour {
 
         var mediums = new JsonData();
         var medium = new JsonData();
+        var param = new JsonData();
         mediums["global"] = medium;
 
-        medium["g"] = g;
-        medium["sigma_a"] = Util.fromColor(sigma_a);
-        medium["sigma_s"] = Util.fromColor(sigma_s);
+        medium["param"] = param;
+        medium["type"] = "homo";
+
+        param["g"] = g;
+        param["sigma_a"] = Util.fromColor(sigma_a);
+        param["sigma_s"] = Util.fromColor(sigma_s);
 
         _output["mediums"] = mediums;
     }
@@ -432,7 +436,7 @@ public class Paladin : MonoBehaviour {
             transformData["type"] = "matrix";
             transformData["param"] = Util.fromMatrix(node.localToWorldMatrix);
             shapeData["transform"] = transformData;
-            shapeData["param"] = mc.fileName + ".json";
+            shapeData["param"] = mc.fileName + "." + mc.extName();
             if(_output["shapes"] == null) {
                 _output["shapes"] = new JsonData();
             }
@@ -454,33 +458,15 @@ public class Paladin : MonoBehaviour {
 
     }
 
-
-
     void handlePrimitives() {
         _output["shapes"] = null;
         handleChild(transform);
     }
 
-    byte[] jsonToBytes(JObject str) {
-        using (var ms = new MemoryStream()) {
-            using (var bw = new BsonWriter(ms)) {
-                var serializer = new JsonSerializer();
-
-                serializer.Serialize(bw, str);
-
-                bw.Flush();
-            }
-
-            return ms.ToArray();
-        }
-    }
-
     void export() {
         string json = _output.ToJson(true);
 
-        JObject jo = (JObject)JsonConvert.DeserializeObject(json);
-
-        
+        //JObject jo = (JObject)JsonConvert.DeserializeObject(json);
 
         var dir = outputDir + "/" + outputName;
         if (!Directory.Exists(dir)) {
@@ -490,13 +476,12 @@ public class Paladin : MonoBehaviour {
         var path = "./" + dir + "/" + SceneFileName + ".bson";
         var sr = File.CreateText("./" + dir + "/" + SceneFileName + ".json");
 
-        var bs = jsonToBytes(jo);
+        //var bs = jsonToBytes(jo);
 
-        File.WriteAllBytes(path, bs);
+        //File.WriteAllBytes(path, bs);
 
-        //sr.Write(jsonToBytes(jo));
+        sr.Write(json);
 
-        sr.WriteLine(json);
         sr.Close();
     }
 }
