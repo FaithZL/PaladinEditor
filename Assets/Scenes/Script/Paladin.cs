@@ -7,6 +7,10 @@ using UnityEngine.Assertions;
 using System.IO;
 using UnityEditor;
 using System.Threading;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Bson;
+
 
 //public struct Medium {
 //    public float g;
@@ -99,6 +103,8 @@ public class Paladin : MonoBehaviour {
         //progressReporter = new ThreadStart(onProgress);
         //Thread childThread = new Thread(progressReporter);
         //childThread.Start();
+
+        
     }
 
     private void Awake() {
@@ -455,15 +461,40 @@ public class Paladin : MonoBehaviour {
         handleChild(transform);
     }
 
+    byte[] jsonToBytes(JObject str) {
+        using (var ms = new MemoryStream()) {
+            using (var bw = new BsonWriter(ms)) {
+                var serializer = new JsonSerializer();
+
+                serializer.Serialize(bw, str);
+
+                bw.Flush();
+            }
+
+            return ms.ToArray();
+        }
+    }
 
     void export() {
         string json = _output.ToJson(true);
+
+        JObject jo = (JObject)JsonConvert.DeserializeObject(json);
+
+        
+
         var dir = outputDir + "/" + outputName;
         if (!Directory.Exists(dir)) {
             Directory.CreateDirectory(dir);
         }
         string SceneFileName = outputName;
+        var path = "./" + dir + "/" + SceneFileName + ".bson";
         var sr = File.CreateText("./" + dir + "/" + SceneFileName + ".json");
+
+        var bs = jsonToBytes(jo);
+
+        File.WriteAllBytes(path, bs);
+
+        //sr.Write(jsonToBytes(jo));
 
         sr.WriteLine(json);
         sr.Close();
