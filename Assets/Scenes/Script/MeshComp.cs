@@ -176,7 +176,7 @@ public class MeshComp : MonoBehaviour
         if (!Directory.Exists(_dir)) {
             Directory.CreateDirectory(_dir);
         }
-
+        Debug.Log("开始写入" + _filePath);
         if (File.Exists(_filePath)) {
             return;
         }
@@ -189,7 +189,7 @@ public class MeshComp : MonoBehaviour
             File.WriteAllBytes(_filePath, Util.jsonToBytes(jo));
         }
         
-        Debug.Log("baocun");
+        Debug.Log(_filePath + "写入完成");
     }
 
     void export() {

@@ -189,8 +189,8 @@ public class Paladin : MonoBehaviour {
         var texture = matSky.GetTexture("_MainTex");
         var rotation = - matSky.GetFloat("_Rotation") - 180;
         var color = matSky.GetColor("_Tint");
-        var exposure = matSky.GetFloat("_Exposure");
-        exposure = 2 * (float)Math.Pow(exposure, 2) + 0.5f * exposure - 0.5f;
+        var scale = matSky.GetFloat("_Scale");
+        //exposure = 2 * (float)Math.Pow(exposure, 2) + 0.5f * exposure - 0.5f;
 
         var envmapData = new JsonData();
         envmapData["type"] = "envmap";
@@ -210,7 +210,7 @@ public class Paladin : MonoBehaviour {
         transformLst.Add(t1);
         transformLst.Add(t2);
 
-        param["scale"] = exposure;
+        param["scale"] = scale;
         param["L"] = Util.fromColor(color);
         param["nSamples"] = 1;
         param["transform"] = transformLst;
