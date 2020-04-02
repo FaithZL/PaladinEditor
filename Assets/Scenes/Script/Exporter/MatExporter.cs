@@ -8,7 +8,6 @@ using System.IO;
 public class MatExporter {
 
     static public JsonData getMaterialData(UnityEngine.Material mat, Paladin paladin = null) {
-        Debug.Log(mat.name);
         mat.name = getName(mat.name);
         switch (mat.name) {
             case "unity":
@@ -113,6 +112,11 @@ public class MatExporter {
             bumpMapData["param"]["fileName"] = fn;
             bumpMapData["param"]["fromBasePath"] = true;
             param["bumpMap"] = bumpMapData;
+        }
+
+        var uvOffset = mat.GetVector("_MainTex_ST");
+        if(uvOffset != null) {
+            param["uvOffset"] = Util.fromVec4(uvOffset);
         }
 
         param["roughness"] = 1 - mat.GetFloat("_Glossiness");

@@ -18,6 +18,15 @@ public class Util {
         return ret;
     }
 
+    static public JsonData fromVec4(Vector4 v) {
+        var ret = new JsonData();
+        ret.Add((double)v.x);
+        ret.Add((double)v.y);
+        ret.Add((double)v.z);
+        ret.Add((double)v.w);
+        return ret;
+    }
+
     static public JsonData fromColor(Color color) {
         var ret = new JsonData();
         ret.Add((double)color.r);
