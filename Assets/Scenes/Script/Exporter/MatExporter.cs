@@ -43,6 +43,7 @@ public class MatExporter {
         var albedo = new JsonData();
         var color = Util.fromColor(mat.GetColor("_Color"));
         albedo.Add(color);
+        var uvOffset = mat.GetVector("_MainTex_ST");
 
         var mainTex = mat.GetTexture("_MainTex");
         var texData = new JsonData();
@@ -57,7 +58,9 @@ public class MatExporter {
             }
             texData["param"] = new JsonData();
             texData["subtype"] = "spectrum";
-            
+            if (uvOffset != null) {
+                texData["param"]["uvOffset"] = Util.fromVec4(uvOffset);
+            }
             texData["param"]["fileName"] = fn;
             texData["param"]["fromBasePath"] = true;
         } else {
@@ -88,11 +91,15 @@ public class MatExporter {
             if (!File.Exists(dstFn)) {
                 FileUtil.CopyFileOrDirectory(srcFn, dstFn);
             }
+            
             normalMapData["param"] = new JsonData();
             normalMapData["subtype"] = "spectrum";
             normalMapData["type"] = "image";
             normalMapData["param"]["fileName"] = fn;
             normalMapData["param"]["fromBasePath"] = true;
+            if (uvOffset != null) {
+                normalMapData["param"]["uvOffset"] = Util.fromVec4(uvOffset);
+            }
             param["normalMap"] = normalMapData;
         }
 
@@ -106,17 +113,16 @@ public class MatExporter {
             if (!File.Exists(dstFn)) {
                 FileUtil.CopyFileOrDirectory(srcFn, dstFn);
             }
+            
             bumpMapData["param"] = new JsonData();
             bumpMapData["subtype"] = "spectrum";
             bumpMapData["type"] = "image";
             bumpMapData["param"]["fileName"] = fn;
             bumpMapData["param"]["fromBasePath"] = true;
+            if (uvOffset != null) {
+                bumpMapData["param"]["uvOffset"] = Util.fromVec4(uvOffset);
+            }
             param["bumpMap"] = bumpMapData;
-        }
-
-        var uvOffset = mat.GetVector("_MainTex_ST");
-        if(uvOffset != null) {
-            param["uvOffset"] = Util.fromVec4(uvOffset);
         }
 
         param["roughness"] = 1 - mat.GetFloat("_Glossiness");
