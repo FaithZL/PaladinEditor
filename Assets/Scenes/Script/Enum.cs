@@ -30,6 +30,7 @@ public enum LightSampleStrategy {
 
 public enum Accelerator {
     bvh,
+    embree,
     kdTree
 }
 
